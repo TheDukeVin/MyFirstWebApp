@@ -15,9 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from CheckPrimeNumberKevin.views import primeKevin
+from CheckPrimeNumberKevin import views
+from FindPrimeNumberKevin import views2
+from ExplainPrimeNumberKevin import views3
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^checkPrimeNumber/', primeKevin),
+    url(r'^checkPrimeNumber/', views.primeKevin),
+    url(r'^findPrimeNumber/', views2.primeKevin2),
+    url(r'^explainPrimeNumber/', views3.primeKevin3),
 ]
