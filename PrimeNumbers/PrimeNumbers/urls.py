@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^checkPrimeNumber/', views.primeKevin),
     url(r'^findPrimeNumber/', views2.primeKevin2),
     url(r'^explainPrimeNumber/', views3.primeKevin3),
+    url(r'^PrimeNumber/', views.primeInput),
 ]

@@ -5,18 +5,17 @@ from django.http import HttpResponse
 
 name = 'C:/Users/Kevin/Documents/GitHub/MyFirstWebApp/PrimeNumbers/CheckPrimeNumberKevin/Extra data for Web.py'
 
+def resultPage(num,ans):
+    return '<html><body style="font-family:verdana;"><h1>This is Kevin\'s Homepage.</h1><p>This website is dedicated to math.</p><img src="https://i.ytimg.com/vi/GjDNCfOmmPk/maxresdefault.jpg" height="360"width="640"></img><h2>Project: Prime Numbers</h2><p>This is Kevin\'s first web app for determining prime numbers.To use a new number, type a different number at the top.</p><p>You can turn Mersin Mode on and off by changing the url. Mersin mode calculates (2^num)-1 instead of num being prime or not.</p><p>Message from the future: you can now search for prime numbers onmy other web app http://127.0.0.1:8000/findPrimeNumber/?start=2&end=100&Mersin%20mode=0. If you want explanations, visit my web app http://127.0.0.1:8000/explainPrimeNumber/.The biggest prime number I found was 2^3217-1. That has 969 digits! Can you find a bigger one?</p><p>This page has been seen <i>99</i> times.</p><p style="color:#FF0000;"><b>'+num+' is '+ans+'.</b></p><p>Link to my homepage: <a href="/PrimeNumber/">Homepage</a></p></body</html>'
+
+def primeInput(request):
+    return HttpResponse('<html><body style="font-family:verdana;"><h1>This is Kevin\'s Homepage.</h1><p>This website is dedicated to math.</p><img src="https://i.ytimg.com/vi/GjDNCfOmmPk/maxresdefault.jpg" height="360"width="640"></img><h2>Project: Prime Numbers</h2><p>This is Kevin\'s first web app for determining prime numbers.To use a new number, type a different number at the top.</p><p>You can turn Mersin Mode on and off by changing the url. Mersin mode calculates (2^num)-1 instead of num being prime or not.</p><p>Message from the future: you can now search for prime numbers onmy other web app http://127.0.0.1:8000/findPrimeNumber/?start=2&end=100&Mersin%20mode=0. If you want explanations, visit my web app http://127.0.0.1:8000/explainPrimeNumber/.The biggest prime number I found was 2^3217-1. That has 969 digits! Can you find a bigger one?</p><form action="/checkPrimeNumber/">Number:<input type="text" name="num"></input><p>Mersin Mode?(0 or 1)<input type="text" name="Mersin mode"></input></p><p><input type="submit" value="Check Prime Number"></input></p></form></body</html>')
+
 def primeKevin(request):
     with open(name,'r') as f:
         views = int(f.read())
     with open(name,'w') as g:
         g.write(str(views+1))
-    Intro1 = 'This is Kevin\'s first web app for determining prime numbers. To use a new number, type a different number at the top.<br/><br/>'
-    Intro2 = 'You can turn Mersin Mode on and off by changing the url. Mersin mode calculates (2^num)-1 instead of num being prime or not.<br/><br/>'
-    Intro3 = 'Message from the future: you can now search for prime numbers on my other web app http://127.0.0.1:8000/findPrimeNumber/?start=2&end=100&Mersin%20mode=0. '
-    Intro3a = 'If you want explanations, visit my web app http://127.0.0.1:8000/explainPrimeNumber/.'
-    Intro4 = 'The biggest prime number I found was 2^3217-1. That has 969 digits! Can you find a bigger one?<br/><br/>'
-    Intro5 = 'This page has been seen '+str(views)+' times.<br/><br/>'
-    Intro = Intro1+Intro2+Intro3+Intro3a+Intro4+Intro5
     a = int(request.GET.get('num'))
     mode = int(request.GET.get('Mersin mode'))
     if mode == 0:
@@ -25,9 +24,9 @@ def primeKevin(request):
             return HttpResponse(Intro+"Sorry, I can not tell if "+str(a)+" is prime or not.")
         while c<=a**0.5:
             if a%c == 0:
-                return HttpResponse(Intro+str(a)+" is composite.")
+                return HttpResponse(resultPage(str(a),'composite'))
             c+=1
-        return HttpResponse(Intro+str(a)+" is prime")
+        return HttpResponse(resultPage(str(a),'prime'))
     else:
         num = 2**a-1
         if a<3:
@@ -38,5 +37,5 @@ def primeKevin(request):
             count = (count**2-2)%num
             i+=1
         if count == 0:
-            return HttpResponse(Intro+str(num)+" is prime.")
-        return HttpResponse(Intro+str(num)+" is composite.")
+            return HttpResponse(resultPage(str(num),"prime"))
+        return HttpResponse(resultPage(str(num),"composite"))
