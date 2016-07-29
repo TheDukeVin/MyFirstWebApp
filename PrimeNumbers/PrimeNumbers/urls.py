@@ -19,10 +19,12 @@ from CheckPrimeNumberKevin import views
 from FindPrimeNumberKevin import views2
 from ExplainPrimeNumberKevin import views3
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^checkPrimeNumber/', views.primeKevin),
     url(r'^findPrimeNumber/', views2.primeKevin2),
     url(r'^explainPrimeNumber/', views3.primeKevin3),
     url(r'^PrimeNumber/', views.primeInput),
+    url(r'^UniversalStudio/', views.UniStudio),
 ]

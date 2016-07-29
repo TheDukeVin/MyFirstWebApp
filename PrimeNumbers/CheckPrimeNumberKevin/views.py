@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from bs4 import BeautifulSoup
+import urllib2
 
 # Create your views here.
 
@@ -39,3 +41,26 @@ def primeKevin(request):
         if count == 0:
             return HttpResponse(resultPage(str(num),"prime"))
         return HttpResponse(resultPage(str(num),"composite"))
+
+num = ["0","1","2","3","4","5","6","7","8","9"]
+
+def UniStudio(request):
+    webpage = urllib2.urlopen('http://m.universalstudioshollywood.com/waittimes')
+    soup = BeautifulSoup(webpage,'html.parser')
+    min = 10000000
+    count = 0
+    prev = 0
+    ride = 0
+    for anchor in soup.find_all('td'):
+        if count%2 == 1:
+            number = []
+            for char in anchor.get_text():
+                if char in num:
+                    number.append(char)
+            number = ''.join(number)
+            if int(number)<min:
+                min = int(number)
+                ride = prev
+        count+=1
+        prev = anchor.get_text()
+    return HttpResponse(ride+' '+str(min)+" min")
